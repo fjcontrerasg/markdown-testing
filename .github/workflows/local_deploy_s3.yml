@@ -1,0 +1,26 @@
+name: Local Deploy to S3
+on:
+  push:
+    branches:
+      - 'main'
+  workflow_dispatch:
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    env:
+      AWS_ACCESS_KEY_ID: ${{ secrets.LOCAL_AWS_ACCESS_KEY_ID }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.LOCAL_AWS_SECRET_ACCESS_KEY }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Deploy
+        uses: reggionick/s3-deploy@v4
+        with:
+          folder: build
+          bucket: ${{ secrets.LOCAL_S3_BUCKET }}
+          bucket-region: ${{ secrets.LOCAL_S3_BUCKET_REGION }}
+          delete-removed: true
+          no-cache: true
+          private: true
+          files-to-include: '{.*/**,**}'
+  
