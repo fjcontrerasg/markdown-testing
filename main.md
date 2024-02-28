@@ -9,6 +9,6 @@ Explain here how to contribute to the project. Include information about the cod
 
 Include information about the project's license here.
 
-This is a link [main](main.md)
+This is a link [main](help/poc.md)
 
 This is an image ![image](help/image.jpg)
