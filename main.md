@@ -12,3 +12,5 @@ Include information about the project's license here.
 This is a link [main](help/poc.md)
 
 This is an image ![image](help/image.jpg)
+
+Another image ![image](https://github.githubassets.com/assets/GitHub-Mark-ea2971cee799.png)
