@@ -11,16 +11,16 @@ jobs:
       AWS_ACCESS_KEY_ID: ${{ secrets.LOCAL_AWS_ACCESS_KEY_ID }}
       AWS_SECRET_ACCESS_KEY: ${{ secrets.LOCAL_AWS_SECRET_ACCESS_KEY }}
     steps:
-      - uses: actions/checkout@v3
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup AWS
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.LOCAL_AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.LOCAL_AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.LOCAL_S3_BUCKET_REGION }}
 
       - name: Deploy
-        uses: reggionick/s3-deploy@v4
-        with:
-          folder: documentation
-          bucket: ${{ secrets.LOCAL_S3_BUCKET }}
-          bucket-region: ${{ secrets.LOCAL_S3_BUCKET_REGION }}
-          delete-removed: true
-          no-cache: true
-          private: true
-          files-to-include: '{.*/**,**}'
+        run: aws s3 sync . s3://${{ secrets.LOCAL_S3_BUCKET }}/documentation --exclude '*/.git/*' --exclude '*/.github/*' --delete
   
